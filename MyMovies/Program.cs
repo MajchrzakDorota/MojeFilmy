@@ -14,9 +14,7 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddCors(p => p.AddPolicy("corsPolicy", builder =>
 {
-    builder.WithOrigins("http://localhost:8080/").AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader()
-    
-    ;
+    builder.WithOrigins("http://localhost:8080/").AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader();
 }));
 
 builder.Services.AddDbContext<MyMoviesContext>(
