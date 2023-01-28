@@ -12,6 +12,13 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+builder.Services.AddCors(p => p.AddPolicy("corsPolicy", builder =>
+{
+    builder.WithOrigins("http://localhost:8080/").AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader()
+    
+    ;
+}));
+
 builder.Services.AddDbContext<MyMoviesContext>(
     option => option.UseSqlServer(builder.Configuration.GetConnectionString("MyMoviesConnectionString")));
 
@@ -26,6 +33,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+app.UseCors("corsPolicy");
 
 app.UseHttpsRedirection();
 

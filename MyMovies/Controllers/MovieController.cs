@@ -20,18 +20,24 @@ namespace MyMovies.Controllers
         public async Task<ActionResult> GetAllMovies()
         {
             var movies = await _movieService.GetAll();
-            if(movies== null)
+            if (movies == null)
             {
                 return NotFound();
             }
 
             return Ok(movies);
         }
+        [HttpGet("/externalMovies")]
+        public async Task<ActionResult> GetMoviesFromExternalAPI()
+        {
+            var movies = await _movieService.GetDataFromExternalApi();
+            return Ok(movies);
+        }
 
         [HttpGet("/movies/{id}")]
         public async Task<ActionResult> GetMovieById([FromRoute] int id)
         {
-            if(id <= 0)
+            if (id <= 0)
             {
                 return BadRequest("Id must be a positive number");
             }
@@ -43,22 +49,22 @@ namespace MyMovies.Controllers
         [HttpPost("/movies")]
         public async Task<ActionResult> AddMovie([FromBody] Movie movie)
         {
-            if(movie == null)
+            if (movie == null)
             {
                 return BadRequest("Incorrect data!");
             }
 
-            var newMovie = await _movieService.AddMovie(movie);
+            var newMovieId = await _movieService.AddMovie(movie);
 
-            return Created($"/movies/{newMovie}", null);
+            return Created($"/movies/{newMovieId}", null);
         }
 
-        [HttpPatch("/movies/{id}")]
-        public async Task<ActionResult> EditMovie([FromRoute] int id, [FromBody] JsonPatchDocument<Movie> movieUpdates)
+        [HttpPut("/movies/{id}")]
+        public async Task<ActionResult> EditMovie([FromRoute] int id, [FromBody] Movie movieUpdates)
         {
             var movie = await _movieService.EditMovie(id, movieUpdates);
 
-            if(movie == null)
+            if (movie == null)
             {
                 return NotFound();
             }

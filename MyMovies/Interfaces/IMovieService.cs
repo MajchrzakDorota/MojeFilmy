@@ -7,8 +7,9 @@ namespace MyMovies.Interfaces
     {
         Task<List<Movie>> GetAll();
         Task<Movie> GetMovieById(int id);
+        Task<List<Movie>> GetDataFromExternalApi();
         Task<int> AddMovie(Movie movie);
-        Task<Movie> EditMovie(int id, JsonPatchDocument<Movie> movieUpdates);
+        Task<Movie> EditMovie(int id, Movie movieUpdates);
         Task<bool> DeleteMovie(int id);
     }
 }
