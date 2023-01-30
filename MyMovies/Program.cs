@@ -2,8 +2,13 @@ using Microsoft.EntityFrameworkCore;
 using MyMovies.Entities;
 using MyMovies.Interfaces;
 using MyMovies.Services;
+using NLog.Web;
 
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Logging.ClearProviders();
+builder.Logging.SetMinimumLevel(Microsoft.Extensions.Logging.LogLevel.Trace);
+builder.Host.UseNLog();
 
 // Add services to the container.
 
@@ -33,6 +38,7 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseCors("corsPolicy");
+
 
 app.UseHttpsRedirection();
 
